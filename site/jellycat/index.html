@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jellycat 情感连接设计</title>
+    <style>
+        /* =========================================
+           CSS Reset & Variables
+           ========================================= */
+        :root {
+            --color-text-main: #1d1d1f;
+            --color-text-secondary: #86868b;
+            --color-bg-page: #ffffff;
+            --color-bg-card: #ffffff;
+            --color-bg-quote: #F5F9FA;
+            --color-border: #eeeeee;
+            
+            --color-teal: #00B8A9;
+            --color-red: #FF5A5F;
+            
+            /* 全站统一字体与标题等级 */
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Roboto, Helvetica, Arial, sans-serif;
+            --fs-h1: 36px;   /* 页面主标题 */
+            --fs-h2: 24px;   /* 一级章节标题 */
+            --fs-h3: 18px;   /* 二级小节标题 */
+            --fs-body: 16px;
+            --fs-body-lg: 18px;
+            --fs-sm: 14px;
+            --fs-xs: 12px;
+            --font-stack: var(--font-main);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-stack);
+            color: var(--color-text-main);
+            background-color: var(--color-bg-page);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding-bottom: 100px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 24px 0;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* =========================================
+           Header Section
+           ========================================= */
+        header {
+            text-align: center;
+            padding: 80px 0 60px;
+        }
+
+        .logo-container {
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo-fallback {
+            font-weight: 900;
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: #000;
+            display: none;
+            border: 2px solid #000;
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
+
+        h1 {
+            font-size: var(--fs-h1);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            letter-spacing: -0.01em;
+            color: #000;
+        }
+
+        .subtitle {
+            font-size: var(--fs-body-lg);
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        /* =========================================
+           Hero Image Section
+           ========================================= */
+        .hero {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 100px;
+        }
+
+        .hero img {
+            border-radius: 0;
+        }
+
+        /* =========================================
+           Typography & Layout
+           ========================================= */
+        .content-block {
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            font-size: var(--fs-xs);
+            font-weight: 700;
+            color: var(--color-text-secondary);
+            margin-bottom: 16px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        h2 {
+            font-size: var(--fs-h2);
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #000;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-size: var(--fs-h3);
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #000;
+            line-height: 1.4;
+        }
+
+        p {
+            font-size: var(--fs-body);
+            color: #333;
+            margin-bottom: 24px;
+            text-align: justify;
+            line-height: 1.8;
+        }
+        
+        strong {
+            font-weight: 600;
+            color: #000;
+        }
+
+        .disclaimer p {
+            font-size: var(--fs-sm);
+            color: var(--color-text-secondary);
+        }
+
+        /* =========================================
+           Images
+           ========================================= */
+        .full-width-img {
+            width: 100%;
+            margin-bottom: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            /* border: 1px solid var(--color-border); */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        }
+
+        /* =========================================
+           Lists
+           ========================================= */
+        .styled-list {
+            padding-left: 20px;
+            margin-bottom: 24px;
+        }
+
+        .styled-list li {
+            margin-bottom: 12px;
+            color: #333;
+            padding-left: 8px;
+        }
+
+        /* =========================================
+           JellyGift Section
+           ========================================= */
+        .split-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+        
+        .split-content h2 {
+            margin-bottom: 20px;
+        }
+        
+        .split-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        /* =========================================
+           Footer
+           ========================================= */
+        .footer-section {
+            text-align: center;
+            padding-top: 60px;
+            border-top: 1px solid var(--color-border);
+            margin-top: 100px;
+        }
+
+        .footer-logo-circle {
+            width: 60px;
+            height: 60px;
+            background: #000;
+            border-radius: 50%;
+            margin: 40px auto 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        
+        .footer-logo-circle img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+        }
+
+        /* =========================================
+           Responsive
+           ========================================= */
+        @media (max-width: 768px) {
+            h1 { font-size: 28px; }
+            .split-section { grid-template-columns: 1fr; }
+            .hero img { max-height: 400px; }
+        }
+
+        /* =========================================
+           Animation
+           ========================================= */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+<link rel="stylesheet" href="./index.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- 返回主页 -->
+        <p style="margin-bottom: 24px;"><a href="../index.html" style="font-size: 14px; color: #666; text-decoration: underline;">← 返回主页</a></p>
+        <!-- Header -->
+        <header class="fade-in-up">
+            <div class="logo-container">
+                <img src="https://i.postimg.cc/dQNxL0VR/logo1.png" alt="Jellycat London" class="logo-img" id="mainLogo">
+                <div class="logo-fallback" id="logoFallback">JELLYCAT</div>
+            </div>
+            <h1>超越毛绒玩具的<br>情感连接设计</h1>
+            <p class="subtitle">
+                重新定义 Jellycat 的数字体验，<br>
+                为全球百万用户创造深度情感联结
+            </p>
+        </header>
+
+        <!-- Hero Image -->
+        <div class="hero fade-in-up">
+            <img src="https://i.postimg.cc/Znhf8WXm/f6f06615c565bf227e5c9c7b5868e286.png" alt="Jellycat App Interface Mockup">
+        </div>
+
+        <!-- Disclaimer -->
+        <section class="content-block disclaimer fade-in-up">
+            <span class="section-label">Disclaimer</span>
+            <p>
+                在深入探讨之前，我想指出，根据我的保密协议，我已将本案例研究中的任何机密信息省略。这里分享的见解是我个人的看法，并不一定代表JELLYCAT的观点。
+            </p>
+        </section>
+
+        <!-- Project Background -->
+        <section class="content-block fade-in-up">
+            <span class="section-label">Getting started</span>
+            <h2>Project Background</h2>
+            <p><strong>超越毛绒玩具：情感经济学.</strong></p>
+            <p>
+                金融的核心是信任，而 Jellycat 的核心是 “ 情感连接”。作为一个拥有邪教般忠诚度的玩具品牌，其数字体验 往往落后于实物产品带来的愉悦感。
+            </p>
+            <p>
+                当前的挑战在于：如何将用户的 “冲动性购买” 转化为 “持续性的社群参与”？我们发现用户意愿呈现显著的"分裂"特征。
+            </p>
+        </section>
+
+        <!-- Insights Data Image -->
+        <section class="content-block fade-in-up">
+            <img class="full-width-img" src="https://i.postimg.cc/2yfHQ1gR/a97878a88cbc26e1a6c330cd3c07f3e3.jpg" alt="用户购买动机分布数据">
+        </section>
+
+        <!-- Business Insights -->
+        <section class="content-block fade-in-up">
+            <span class="section-label">Business Insights</span>
+            <h2>Business View</h2>
+            <p>分析用户摩擦点。通过分析客服聊天单来识别"焦虑"一样，我们对 Jellycat 的潜在客询进行了归类。数据表明， 礼嘱过程的不确定性和 售后归属感的缺失是导致客服版本上升和客购流失的主要原因。</p>
+            
+            <img class="full-width-img" src="https://i.postimg.cc/nrtd4XNf/460fd692fb8dff9d055a6266d2f45c76.png" alt="User Stories and Persona Analysis">
+        </section>
+
+        <!-- JellyGift -->
+        <section class="split-section fade-in-up">
+            <div class="split-content">
+                <h2>JellyGift : <br>情感传递协议</h2>
+                <p>针对“焦虑的送礼者”，我们重新设计了结账流程。这不再是一笔交易，而是一次记忆的创造。重点在于表达透明度和情感个性化。</p>
+            </div>
+            <div class="split-image">
+                <img src="https://i.postimg.cc/Xq02frt3/0e2f00bba67a0526f5490a4bd37ae43c.jpg" alt="JellyGift Interface">
+            </div>
+        </section>
+
+        <!-- Proposal: Gift Profile -->
+        <section class="content-block fade-in-up">
+            <span class="section-label">Proposal</span>
+            <h2>礼物档案</h2>
+            <p>基于拼图的礼物流程。我们想要更直观的收集用户的礼物需求，在需求达成时发送通知召回消费者；所以设计了一款“送礼人助手”的角色来匹配不同的礼物需求；用户可以根据不同的送礼对象，以及生日、节日等送礼节点，生成专属的个人送礼社交账本，获得个性化的礼物推荐，并通过微信订阅消息提醒，人情往来一目了然。</p>
+            
+            <img src="https://i.postimg.cc/mkGdYPKb/1e3d9ac8b18b8b06b32c675d6636fd53.jpg" alt="Gift Profile UI" class="full-width-img">
+        </section>
+
+        <!-- Discovery & Diagnosis -->
+        <section class="content-block fade-in-up">
+            <span class="section-label">Discovery & Diagnosis</span>
+            <h2>现有用户旅程中的“冲突时刻”地图</h2>
+            <p><strong>礼赠冲突 (The Gifting Clash)：</strong></p>
+            <p>场景：想给异地的网友或处于暧昧期的对象送一只Jellycat。</p>
+            <p>现状：必须询问对方地址（破坏惊喜感或显得唐突） -> 填写订单 -> 等待漫长的物流 -> 对方收到普通的快递箱。</p>
+            <p>分析：物流的冷漠稀释了礼物的温情。强销信息像“一瞥即过”，而传统的物流查询不仅繁琐，而且完全没有情感色彩。</p>
+            
+            <img src="https://i.postimg.cc/cCNDRvPC/b68a7a579a7da7b6572a4731b38cc91a.jpg" alt="Conflict Map" class="full-width-img">
+        </section>
+
+        <!-- Business Insights (Part 2) -->
+        <section class="content-block fade-in-up">
+            <span class="section-label">Business Insights</span>
+            <h2>Business View</h2>
+            <p>JellyClub：私域社区营销。我们发现Jellycat目前的数字化短板在于：拥有强大的品牌情感势能，却缺乏承接这种势能的自有生态系统。</p>
+            <p>本报告提出的Jellycat社区地并非简单的功能堆砌，而是基于“解决冲突”和“赋能用户”两大原则的系统化重构。</p>
+            
+            <img src="https://i.postimg.cc/R0pyH17t/b88438abdad6a8a4b03aaff4981b54b2.jpg" alt="JellyClub Business Logic" class="full-width-img">
+
+            <p>预期商业收益：</p>
+            <ol class="styled-list">
+                <li><strong>提升客户终身价值 (LTV)：</strong>通过“领养系统”和“家族图鉴”，将用户的单次购买行为转化为长期的“收集养成”行为。</li>
+                <li><strong>降低获客成本 (CAC)：</strong>“快乐接力”礼赠功能利用社交裂变，让老用户主动向新用户（收礼人）介绍品牌，且无需知道地址的特性极大地降低了传播门槛。</li>
+                <li><strong>优化库存管理与降低客服成本：</strong>私域的“公平抽签”系统将需求透明化，减少了因抢购失败导致的负面舆情和客服投诉；自助填写地址功能则消除了物流配送中的大部分错误。</li>
+            </ol>
+        </section>
+
+        <!-- Proposal: Club Benefits -->
+        <section class="content-block fade-in-up">
+            <span class="section-label">Proposal</span>
+            <h2>私域社区营销的优势</h2>
+            <ol class="styled-list">
+                <li>内容更真实且可控，用户信任度高（比起详情页消费者更倾向看到外界更真实的评价讨论）</li>
+                <li>低成本、传播速度快（社区内容源于用户自身创作，用户即是创作者也是传播者）</li>
+                <li>孵化忠实粉丝为KOC，实现品牌KOC矩阵，持续引流裂变</li>
+                <li>整合UGC内容转化为品牌营销物料，投放公域进行种草获客</li>
+            </ol>
+            <p>Jellycat目前的数字化短板在于：拥有强大的品牌情感势能，却缺乏承接这种势能的自有生态系统。</p>
+            <p>本报告提出的Jellycat社区地并非简单的功能堆砌，而是基于“解决冲突”和“赋能用户”两大原则的系统化重构。</p>
+            <img src="https://i.postimg.cc/cCNDRvPr/7a00b7729f695a528f00d1b43207d7a2.jpg" alt="Community Value Radar Chart" class="full-width-img">
+        </section>
+
+        <!-- Other Highlight -->
+        <section class="content-block fade-in-up">
+            <h2>Other Highlight</h2>
+            <p>发布话题相关内容有机会获取奖品，显示当前活动的参与人数，增加活动互动性</p>
+            <img src="https://i.postimg.cc/prt0fm3T/f1619d7f02ea51c22c9a841dd48b921e.jpg" alt="Activity Highlight UI" class="full-width-img" style="box-shadow: none;">
+        </section>
+
+        <!-- Related Products -->
+        <section class="content-block fade-in-up">
+            <h2>关联商品</h2>
+            <p>关联商品，将会展示在内容详情中。</p>
+            <img src="https://i.postimg.cc/cH39tRkd/003bb4bb7d9a5bb4f2262fb1270239ad.jpg" alt="Related Products UI" class="full-width-img">
+        </section>
+
+        <!-- More Possibilities -->
+        <section class="content-block fade-in-up">
+            <span class="section-label">More Possibilities</span>
+            <h2>核心概念：从“粉丝群”到“数字栖息地”</h2>
+            <p>不同于Pop Mart的“抽盒/App侧重于交易、攻略和盲盒博彩带来的多巴胺刺激，Jellycat的私域社区必须侧重于安抚、陪伴和归属感带来的催产素分泌。</p>
+            <p><strong>方案：数字孪生与领养系统 (Digital Twin & Adoption)</strong><br>
+            这是整个私域生活的基石，旨在解决“正品验证”和“身份展示”的冲突。</p>
+            <p><strong>一物一码：</strong>在物理吊牌上通过NFC或加密二维码植入唯一身份ID。</p>
+            <p><strong>领养仪式：</strong>用户在微信小程序/App中扫描吊牌，触发一段独特的动画（例如：玩偶从箱子里探出头，害羞地打招呼）。</p>
+            <p><strong>数字资产生成：</strong>扫描成功后，用户的“栖息地”里会生成该玩偶的3D或插画形象，系统会自动颁发一张**“电子出生证明”** (Adoption Certificate)，记录领养日、领养人（用户ID）以及玩偶的性格设定。</p>
+            <p><strong>价值：</strong>这一过程将“购买商品”升华为“接纳家庭成员”，极大地增强了用户的感情投入。同时，这建立了不可篡改的所有权证明，有效打击假货。</p>
+            
+            <img src="https://i.postimg.cc/1XZWG8bQ/8f436c702c7491652ab191b8872f7e23.png" alt="Digital Twin UI" class="full-width-img">
+        </section>
+
+        <!-- Thanks -->
+        <section class="footer-section fade-in-up">
+            <span class="section-label">Thanks</span>
+            <h2>Shout-Outs</h2>
+            <p>我心感谢整个过程的每一位同仁。特别感谢参与调研的同事，为功能框架的设计奠定了夯实的基础。</p>
+            
+            <div class="footer-logo-circle">
+                <img src="https://i.postimg.cc/T13wrWHY/1e785ea1-636a-44b1-8ff1-be4fb06994e9.png" alt="Footer Logo">
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Handle Logo Error (Fallback to text)
+        const logoImg = document.getElementById('mainLogo');
+        const logoFallback = document.getElementById('logoFallback');
+        
+        logoImg.onerror = function() {
+            logoImg.style.display = 'none';
+            logoFallback.style.display = 'block';
+        };
+
+        // Scroll Animation Observer
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, observerOptions);
+
+            const animatedElements = document.querySelectorAll('.fade-in-up');
+            animatedElements.forEach(el => observer.observe(el));
+        });
+    </script>
+<script type="module" src="./index.tsx"></script>
+</body>
+</html>
